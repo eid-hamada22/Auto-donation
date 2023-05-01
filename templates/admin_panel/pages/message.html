@@ -1,0 +1,60 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="p4">
+
+    <div class="uper">
+        <div class="models sp">
+        <h1 style="" class="hme">الرسائل</h1>
+        </div>
+
+    </div>
+    <br>
+
+
+
+    <table class="table table-hover" style="width: 100%; margin-top: 50px;">
+        <thead>
+            <tr>
+                <th style="width: 10%;"><center>التاريخ</center></th>
+                <th style="width: 10%;"><center>القراءة</center></th>
+                <th style="width: 20%;"><center>الرسالة</center></th>
+                <th style="width: 10%;"><center>رقم الهاتف</center></th>
+                <th style="width: 10%;"><center>البريد الالكتروني</center></th>
+                <th style="width: 10%;"><center>الاسم</center></th>
+            </tr>
+          </thead>
+        <tbody id="output1" style="width: 100%;">
+            {% for message in messages %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{message.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">
+                        {% if message.readed %}
+                            مقروءة
+                        {% else %}
+                        <a href="?read&id={{message.id}}" class="btn btn-primary">تعيين كمقروءة</a>
+                        {% endif %}
+                    </td>
+                    <td style=" text-align:center; width: 20%;">{{message.message}}</td>
+                    <td style=" text-align:center; width: 10%;">{{message.phone_num}}</td>
+                    <td style=" text-align:center; width: 10%;">{{message.email}}</td>
+                    <td style=" text-align:center; width: 10%;">{{message.name}}</td>
+                </tr>                  
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+
+    <br>
+
+
+</div>
+
+{% endblock body %}

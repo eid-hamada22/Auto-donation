@@ -1,0 +1,199 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="p4">
+    <div class="modal fade" id="name"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post">
+            {% csrf_token %}
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">اضافة مستفيد</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div style="float: right;">: الاسم</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="اسم المتفيد" required class="form-control" name="name"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: رقم الهاتف</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="رقم هاتف المتفيد" required class="form-control" name="phone_num"  style="float: right;">
+                        </div>
+                        
+                        <div style="float: right;">: رقم الهوية الوطنية</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="رقم الهوية الوطنية للمتفيد" required class="form-control" name="id_ps"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: العنوان</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="عنوان المتفيد" required class="form-control" name="address"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: (longtude)احداثيات خط الطول</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="احداثيات خط الطول للمتفيد" required class="form-control" name="long"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: (latitude)احداثيات خط العرض</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="احداثيات خط الطول للمتفيد" required class="form-control" name="Lat"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: مقياس الحاجة (1-10)</div>
+                        <div class="form-group">
+                            <input type="number" dir="rtl" placeholder="مقياس حاجة المتفيد" required class="form-control" name="need_scale" min="1" max="10" style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: تبرعات الملابس </div>
+                        <div class="form-group">
+                        <select name="clothes_needed_type" id="" dir="rtl" placeholder="تبرعات الملابس" required class="form-control"   style="float: right;">
+                            <option value="" selected disabled>اختر</option>
+                            <option value="0">لا يقبل</option>
+                            <option value="babys">babys</option>
+                            <option value="girls">girls</option>
+                            <option value="boys">boys</option>
+                            <option value="men">men</option>
+                            <option value="womon">womon</option>
+                        </select>
+                        </div>
+
+                        <div style="float: right;">: تبرعات المستلزمات الدراسية</div>
+                        <div class="form-group">
+                        <select name="study_supplies_needed_type" id="" dir="rtl" placeholder="تبرعات المستلزمات الدراسية" required class="form-control"   style="float: right;">
+                            <option value="" selected disabled>اختر</option>
+                            <option value="0">لا يقبل</option>
+                            <option value="stationery">stationery</option>
+                            <option value="g1">g1</option>
+                            <option value="g2">g2</option>
+                            <option value="g3">g3</option>
+                            <option value="g4">g4</option>
+                            <option value="g5">g5</option>
+                            <option value="g6">g6</option>
+                            <option value="g7">g7</option>
+                            <option value="g8">g8</option>
+                            <option value="g9">g9</option>
+                            <option value="g10">g10</option>
+                            <option value="g11_sen">g11_sen</option>
+                            <option value="g11_lit">g11_lit</option>
+                            <option value="g12_sen">g12_sen</option>
+                            <option value="g12_lit">g12_lit</option>
+                        </select>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary" name="add">اضافة</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="uper">
+        <div class="models sp">
+        <h1 style="" class="hme">المُستفيدين</h1>
+        <div style=" font-size: x-large;"><button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#name">اضافة مستفيد</button></div>
+        </div>
+
+    </div>
+    <br>
+
+
+    <form  method="GET" class="models">
+        <div class="input-group  ds" style="width: 30% !important;">
+          <button class="btn btn-outline-secondary"name="dt" id="button-addon1">تصفية</button>
+          <input type="date" required class="form-control"name="data_as"  placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1"value="{{data_as}}">
+        </div>
+
+    </form>
+
+    {% if  day_beneficiary %}
+        <div class="models sp">
+            <h5 style="margin-top: 50px;" class="hme" >المُستفيدين الذين تم تسجيلهم في تاريخ {{data_as}}</h5>
+        </div>
+        <table class="table table-hover" style="width: 100%; margin-top: 0px;">
+            <thead>
+                <tr>
+                    <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                    <th style="width: 10%;"><center>العناصر المتمنية</center></th>
+                    <th style="width: 10%;"><center> م.دراسية</center></th>
+                    <th style="width: 10%;"><center> الملابس</center></th>
+                    <th style="width: 10%;"><center>مقياس الحاجة</center></th>
+                    <th style="width: 10%;"><center>المُسجل</center></th>
+                    <th style="width: 10%;"><center>العنوان</center></th>
+                    <th style="width: 10%;"><center>رقم الهوية</center></th>
+                    <th style="width: 10%;"><center>رقم الهاتف</center></th>
+                    <th style="width: 10%;"><center>الاسم</center></th>
+                </tr>
+              </thead>
+            <tbody id="output1" style="width: 100%;">
+                {% for beneficiary in day_beneficiary %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.id}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.study_supplies_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.clothes_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.need_scale}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.registrar}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.address}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.id_ps}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.phone_num}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.name}}</td>
+                </tr>                  
+            {% endfor %}
+                
+            </tbody>
+        </table>
+    {% endif %}
+
+    <table class="table table-hover" style="width: 100%; margin-top: 50px;">
+        <thead>
+            <tr>
+                <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                <th style="width: 10%;"><center>العناصر المتمنية</center></th>
+                <th style="width: 10%;"><center> م.دراسية</center></th>
+                <th style="width: 10%;"><center> الملابس</center></th>
+                <th style="width: 10%;"><center>مقياس الحاجة</center></th>
+                <th style="width: 10%;"><center>المُسجل</center></th>
+                <th style="width: 10%;"><center>العنوان</center></th>
+                <th style="width: 10%;"><center>رقم الهوية</center></th>
+                <th style="width: 10%;"><center>رقم الهاتف</center></th>
+                <th style="width: 10%;"><center>الاسم</center></th>
+            </tr>
+          </thead>
+        <tbody id="output1" style="width: 100%;">
+            {% for beneficiary in beneficiaries %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.id}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.study_supplies_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.clothes_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.need_scale}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.registrar}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.address}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.id_ps}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.phone_num}}</td>
+                    <td style=" text-align:center; width: 10%;">{{beneficiary.name}}</td>
+                </tr>                  
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+    <br>
+
+
+</div>
+
+{% endblock body %}

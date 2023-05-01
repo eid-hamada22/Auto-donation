@@ -1,0 +1,100 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="p4">
+    <div class="uper">
+        <h1 style="" class="hme">الصفحة الرئيسية</h1>
+    </div>
+
+    <br>
+    <div class="models" style="width:90%;">
+        <div class="card text-white bg-danger mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;"> عدد التبرعات (هذا الشهر)</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;">العدد  : <span> {{month_donations}} تبرع</span> </span></h5>
+            </div>
+        </div>
+        <div class="card text-dark bg-warning mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;"> عدد التبرعات (الشهر الماضي)</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;">العدد  : <span> {{last_month_donations}} تبرع</span> </span></h5>
+            </div>
+        </div>
+        <div class="card text-white bg-success mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;">  عدد التبرعات (الكل) </span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;">العدد  : <span>{{all_donations}} تبرع</span> </span></h5>
+            </div>
+        </div>
+
+
+
+        <div class="card text-white bg-primary mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;"> المستفيدين المسجلين (هذا الشهر)</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد :{{month_beneficiary}} مستفيدين</span></h5>
+            </div>
+        </div>
+
+        <div class="card text-white bg-primary mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;">  المستفيدين المسجلين (الشهر الماضي)</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد :{{last_month_beneficiary}} مستفيدين</span></h5>
+            </div>
+        </div>
+
+        <div class="card text-white bg-primary mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;">  المستفيدين المسجلين (الكل)</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد :{{all_beneficiary}} مستفيدين</span></h5>
+            </div>
+        </div>
+
+        <div class="card text-dark bg-light mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;"> عدد نقاط التبرع</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد: {{delivery_points}} نقاط تبرع</span></h5>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary mb-3 p mode" style="">
+            <div class="card-header"><span style="float: right;"> عدد العناصر</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد : {{items}} عناصر</span></h5>
+            </div>
+        </div>
+
+        <div class="card text-end mb-3 border-dark mode" >
+            <div class="card-header"><span style="float: right;"> عدد الرسائل الغير مقروءة</span></div>
+            <div class="card-body ">
+                <h5 class="card-title"><span style="float: right;"> العدد : {{unreaded_messages}} رسائل</span></h5>
+            </div>
+        </div>
+    </div>
+<div style="font-size: 25px;">:التقارير</div>
+<div class="models" style="width:90%;">
+
+
+<div class="card text-end mb-3 border-dark mode" >
+      <div class="card-header">التقرير  البياني</div>
+  <div class="card-body">
+
+    <p class="card-text">اطلع على جميع الايرادات والمصروفات  وانتاج المكابس وغيره من بداية الاسبوع </p>
+    <a href="{% url 'admin_panel:monthly_graphic_report' %}" class="btn btn-dark ">مشاهدة التقرير</a>
+  </div>
+</div>
+
+
+
+
+
+    
+</div>
+</div>
+
+{% endblock body %}
+

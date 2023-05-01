@@ -1,0 +1,91 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="p4">
+
+    <div class="uper">
+        <div class="models sp">
+        <h1 style="" class="hme">مديري مراكز التبرع</h1>
+        </div>
+
+    </div>
+    <br>
+
+
+
+    
+    {% if  day_delivery_point_admins %}
+        <div class="models sp">
+            <h5 style="margin-top: 50px;" class="hme" >مديري مراكز التبرع الذين تم تسجيلهم في تاريخ {{data_as}}</h5>
+        </div>
+        <table class="table table-hover" style="width: 100%; margin-top: 0px;">
+            <thead>
+                <tr>
+                    <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                    <th style="width: 10%;"><center>العناصر المتمنية</center></th>
+                    <th style="width: 10%;"><center> م.دراسية</center></th>
+                    <th style="width: 10%;"><center> الملابس</center></th>
+                    <th style="width: 10%;"><center>مقياس الحاجة</center></th>
+                    <th style="width: 10%;"><center>المُسجل</center></th>
+                    <th style="width: 10%;"><center>العنوان</center></th>
+                    <th style="width: 10%;"><center>رقم الهوية</center></th>
+                    <th style="width: 10%;"><center>رقم الهاتف</center></th>
+                    <th style="width: 10%;"><center>الاسم</center></th>
+                </tr>
+              </thead>
+            <tbody id="output1" style="width: 100%;">
+                {% for delivery_point_admin in day_delivery_point_admins %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.id}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.study_supplies_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.clothes_needed_type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.need_scale}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.registrar}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.address}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.id_ps}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.phone_num}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.name}}</td>
+                </tr>                  
+            {% endfor %}
+                
+            </tbody>
+        </table>
+    {% endif %}
+
+    <table class="table table-hover" style="width: 100%; margin-top: 50px;">
+        <thead>
+            <tr>
+                <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                <th style="width: 10%;"><center>المؤسسة المُودارة</center></th>
+                <th style="width: 10%;"><center>البريد الالكتروني</center></th>
+                <th style="width: 10%;"><center>رقم الهاتف</center></th>
+                <th style="width: 10%;"><center>اسم المستخدم</center></th>
+            </tr>
+          </thead>
+        <tbody id="output1" style="width: 100%;">
+            {% for delivery_point_admin in delivery_point_admins %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.0.date_joined|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.1}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.0.email}}</td>
+                    <td style=" text-align:center; width: 10%;" dir="rtl">{{delivery_point_admin.1.user_phone_num}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point_admin.0.username}}</td>
+                </tr>                  
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+    <br>
+
+
+</div>
+
+{% endblock body %}

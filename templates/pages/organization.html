@@ -1,0 +1,847 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="
+height: 50px;
+">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- project title -->
+  <title>Organization Info</title>
+  <!-- the website icon  -->
+  <link rel="shortcut icon" href="{% static 'img/donation-low-resolution-logo-color-on-transparent-background.png' %}" type="image/x-icon">
+  <!-- main css file  -->
+  <link rel="stylesheet" href="{% static 'css/organization.css' %}">
+  <!-- number input css file  -->
+  <link rel="stylesheet" href="{% static 'css/jquery.nice-number.css' %}">
+  <!-- bootstrap file css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!--  font awsome library  -->
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}" />
+  <!-- jquery files -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+  <!-- datatable library -->
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
+
+
+
+  <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+
+</head>
+
+<body>
+
+  <!-- organization section start -->
+  <div class="organization-section">
+    <div class="container">
+      <div class="row">
+
+        <div class="
+            col-12 row">
+
+          <div class="top-organization-section col-12 row text-center align-items-center" style="
+            margin-top: 10px;
+        ">
+            <div class="user-org-branch col-5 col-sm-1 text-start" style="margin-top:0 !important">
+
+              <div class="dropdown">
+
+                <a class=" dropdown-toggle second-text fw-bold" href="#" role="button" data-bs-toggle="dropdown"
+                  aria-expanded="false">
+                  <i class="fas fa-user me-2"></i> {{delivery_point.name}}
+                </a>
+                <ul class="dropdown-menu text-center" style="background-color:#061738; padding: 0 !important; "
+                  aria-labelledby="navbarDropdown">
+
+                  <li><a class="dropdown-item text-center" style="  padding: 5px 29px !important;color: #60cd12;"
+                      href="?logout">Logout</a></li>
+                </ul>
+
+              </div>
+            </div>
+            <div class="section-title fw-bold col-7 col-sm-11" style="    margin-bottom: 0;
+              ">ادارة المنظمة</div>
+
+
+
+
+          </div>
+
+
+
+          <hr style="color:#03262c;
+              margin: 1rem 0;
+             color: inherit;
+             border: 0;
+             border-top: 2px solid;
+             opacity: 1.25;">
+        </div>
+        <div class="col-12">
+
+          <!-- ------------------------ -->
+          <!-- /* -----------------------------  add donation section          -------------------------------------            */ -->
+
+          <div class="add-donation-section">
+
+
+            <div class="table-area text-end" style="padding:30px !important">
+              {% if empty %}
+                <h2 dir="rtl" class="section-title" style="color: red;">لم يتم العثور على اي مستفيد يطابق عملية الفلترة : </h2>
+              {% else %}
+                <h2 dir="rtl" class="section-title" style="color: #60cd12;">اضافة تبرع : </h2>
+              {% endif %}
+              <select  class="form-select special-donation-type text-end" id="inputGroupSelect02" required>
+                <option selected disabled>نوع التبرع</option>
+                <option value="clothes">ملابس</option>
+                <option value="school-items">ملازم دراسية</option>
+              </select>
+
+
+              <form method="post" class="clothes-section row">
+                {% csrf_token %}
+                <div dir="rtl" class="clothes-type col-12 col-sm-6">
+                  <label for="basic-url" class="form-label section-subtitle">نوع الملابس :</label>
+                  <div class="input-group mb-3">
+                    <select name="clothes_type" class="form-select clothes-type-select" required>
+                      <option selected disabled value="notachoice">نوع الملابس</option>
+                      <option value="men">رجال +18</option>
+                      <option value="womon">نساء +18</option>
+                      <option value="boys">شباب 10-18</option>
+                      <option value="girls">فتيات 10-18</option>
+                      <option value="child">اطفال 10-</option>
+                      <option value="babys">رضُع 1-3</option>
+                    </select>
+                  </div>
+                </div>
+                <div dir="rtl" class="clothes-numbers col-12 col-sm-6">
+                  <label for="sel" class="form-label section-subtitle">عدد القطع :</label>
+                  <div class="input-group mb-3">
+                    <select name="pieces_number" class="form-select clothes-numbers-select" required>
+                      <option selected disabled value="notachoice">عدد القطع</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div dir="rtl">
+                  <label class="form-label section-subtitle">العنصر :</label>
+                  <div class="input-group mb-3">
+                    <select  name="items" class="form-select school-items-select" required>
+                      <option selected disabled value="notachoice"> العنصر المخزن مسبقاً</option>
+                      <option value="0"> غير مسجل</option>
+                      {% for item in items %}
+                        <option value="{{item.0.id}}">{{item.0.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+
+                <div class="form-floating col-12 special-text-form" dir="rtl">
+                  <textarea name="bio" required class="form-control special-text-area" placeholder="Leave a comment here"
+                    id="floatingTextarea" style="
+                                                      min-height: 15rem;
+                                                      font-size: 15px;
+                                                      margin: 10px 0;
+                                                      font-weight: 400;
+                                                      "></textarea>
+                  <label for="floatingTextarea" style="    padding: 2rem 1.75rem !important;">التعليق</label>
+                </div>
+
+                <div class="photo-side">
+                  <div dir="rtl">
+                    <label for="formFile" class="form-label section-subtitle">صورة التبرع :</label>
+                    <div class="input-group mb-3">
+                      <input name="img" class="form-control form-file-input" type="file" id="formFile" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="button-side">
+                  <button name="clothes" value="clothes" type="submit" class=" btn-outline-dark main-btn " id="dontation1">اضافة</button>
+                </div>
+
+
+
+              </form>
+
+
+
+              <form method="post" class="school-section" style="margin-top: 15px !important;">
+                {% csrf_token %}
+                <input type="hidden" name="type" value="study_supplies">
+
+                <div class="clothes-dontaion-side">
+                  <div dir="rtl">
+                    <label class="form-label section-subtitle">نوع الملازم / التبرع :</label>
+                    <div class="input-group mb-3">
+                      <select name="study_supplies_type" class="form-select school-items-select" required>
+                        <option selected disabled value="notachoice"> نوع الملازم / التبرع</option>
+                        <option value="stationery">قرطاسية عامة</option>
+                        <option value="g12_lit">الصف الثاني عشر الادبي</option>
+                         <option value="g12_sen">الصف الثاني عشر العلمي</option>
+                        <option value="g11_lit">الصف الحادي عشر الادبي</option>
+                        <option value="g11_sen">الصف الحادي عشر العلمي</option>
+                        <option value="g10">الصف العاشر</option>
+                        <option value="g9">الصف التاسع</option>
+                        <option value="g8">الصف الثامن</option>
+                        <option value="g7">الصف السابع</option>
+                        <option value="g6">الصف السادس</option>
+                        <option value="g5">الصف الخامس</option>
+                        <option value="g4">الصف الرابع</option>
+                        <option value="g3">الصف الثالث</option>
+                        <option value="g2">الصف الثاني</option>
+                        <option value="g1">الصف الاول</option>
+                      </select>
+                    </div>
+                  </div>
+
+                </div>
+                <div dir="rtl" class="clothes-numbers col-12 col-sm-12">
+                  <label for="sel" class="form-label section-subtitle">عدد القطع :</label>
+                  <div class="input-group mb-3">
+                    <select name="pieces_number" class="form-select clothes-numbers-select" required>
+                      <option selected disabled value="notachoice">عدد القطع</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+                <div dir="rtl">
+                  <label class="form-label section-subtitle">العنصر :</label>
+                  <div class="input-group mb-3">
+                    <select  name="items" class="form-select school-items-select" required>
+                      <option selected disabled value="notachoice"> العنصر المخزن مسبقاً</option>
+                      <option value="0"> غير مسجل</option>
+                      {% for item in items %}
+                        <option value="{{item.0.id}}">{{item.0.name}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-floating col-12 special-text-form" dir="rtl">
+                  <textarea name="bio" required class="form-control special-text-area" placeholder="Leave a comment here"
+                    id="floatingTextarea" style="
+                                                      min-height: 15rem;
+                                                      font-size: 15px;
+                                                      margin: 10px 0;
+                                                      font-weight: 400;
+                                                      "></textarea>
+                  <label for="floatingTextarea" style="    padding: 2rem 1.75rem !important;">التعليق</label>
+                </div>
+
+                <div class="photo-side">
+                  <div dir="rtl">
+                    <label for="formFile" class="form-label section-subtitle">صورة التبرع :</label>
+                    <div class="input-group mb-3">
+                      <input name="img" class="form-control form-file-input" type="file" id="formFile" required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="button-side">
+                  <button name="study" value="study" type="submit" class=" btn-outline-dark main-btn " id="dontation2">اضافة</button>
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+        </div <!-- ------------------------------------- -->
+        <div class="row text-center justify-content-center" id="special-row">
+
+          <div class="clothing-img col-lg-6 col-12 ">
+            <img src="{% static 'img/organization/choosing-clothes-animate.svg' %}" alt="">
+          </div>
+
+
+
+
+          <div class="col-lg-6 col-12 table-area table-area-special row" style="background-color: #dee2e6;">
+
+
+            <div class="table-content">
+
+              <table id="example" class="table table-striped table-hover text-center" style="width:100%">
+
+                <thead>
+                  <tr>
+                    <th class="text-center" style="font-size : 20px ; color: #60cd12 !important;"> مستلم </th>
+
+                    <th class="text-center" style="font-size : 20px ; color: #60cd12 !important;"> الرسالة </th>
+
+                    <th class="text-center" style="font-size : 20px ; color: #60cd12 !important;">التاريخ</th>
+
+                    <th class="text-center" style="font-size : 20px ; color: #60cd12 !important;"> النوع </th>
+
+                    <th class="text-center" style="font-size : 20px ; color: #60cd12 !important;">الرقم</th>
+
+
+
+                  </tr>
+                </thead>
+
+                <tbody style="color: #60cd12 !important;">
+
+                  {% for donation in loggined_delivery_point_donations %}
+                  <tr>
+                    <td>
+                      <span>
+                        {% if donation.recipient %}
+                        <button type="button" disabled class="btn btn-outline-dark main-btn not-done"
+                          style="color: white;">مستلم </button>
+                        {% else %}
+                        <form method="post">
+                          {% csrf_token %}
+                          <button type="submit" name="recipient" value="{{donation.id}}"
+                            class="btn btn-outline-dark main-btn not-done" style="color: white;">تسليم </button>
+                        </form>
+                        {% endif %}
+                      </span>
+
+                    </td>
+
+                    <td>
+                      <span> ارسلت </span>
+                    </td>
+
+                    <td>
+                      <span> {{donation.entry_date|date:"m-d"}} </span>
+                    </td>
+
+                    <td>
+                      {% if donation.type == "clothes" %}
+                      <span> {{donation.clothes_type}}:{{donation.pieces_number}} </span>
+                      {% elif donation.type == "study_supplies" %}
+                      <span> {{donation.study_supplies_type}}:{{donation.pieces_number}} </span>
+                      {% endif %}
+                    </td>
+
+                    <td>
+                      <span> {{donation.id}} </span>
+                    </td>
+
+
+                  </tr>
+                  {% endfor %}
+
+
+
+
+
+
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+            <!-- <div class="adding-area align-self-end">
+              <div class=" mb-5">
+              
+                <form class="row  special-input-area">
+                  <button class="btn btn-outline-secondary col-12" id="button-addon2" type="submit">اضافة</button>
+                  <input   id="text-box" type="text" placeholder="المحتوى" aria-label="First name" class="form-control col-12 text-center text-box">
+                  <input  id="text-box2" type="text" placeholder="الجنس" aria-label="Last name" class="form-control col-12 text-center text-box">
+                  <input  id="text-box3" type="text" placeholder="المقاس" aria-label="Last name" class="form-control col-12 text-center text-box">
+               
+                </form>            
+              </div>
+           </div> -->
+
+            <div class="toast-container position-fixed  p-3 ">
+              <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header" style="background-color:#061738 ;">
+                  <img src="{% static 'img/organization/people.png' %}" class="rounded me-2" alt="...">
+                  <strong class="me-auto" style="color: #60cd12;"> ملاحظة جديدة </strong>
+                </div>
+                <div class="toast-body" style="background-color:#03262c ;">
+                  لقد تم اضافة غرض جديد الى الجدول
+                </div>
+              </div>
+            </div>
+
+            <div class="toast-container position-fixed  p-3 " dir="ltr">
+              <div id="liveToast2" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header" style="background-color:#061738 ;">
+                  <img src="{% static 'img/organization/people.png' %}" class="rounded me-2" alt="...">
+                  <strong class="me-auto" style="color: #60cd12;"> ملاحظة جديدة </strong>
+                </div>
+                <div class="toast-body" style="background-color:#03262c ;">
+                  لقد تمت العملية بنجاح
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header  ">
+              <h1 class="modal-title fs-5  text-center " id="exampleModalLabel">ملاحظة</h1>
+            </div>
+            <div class="modal-body text-center">
+              تم العملية بنجاح
+            </div>
+            <div class="modal-footer modal-footer-special text-center">
+              <button type="button " class="btn btn-primary modal-change2 fw-bold" data-bs-dismiss="modal"
+                style="padding: 2% 6% !important; font-size: 15px !important; ">تم </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+    <!--  for the li s -->
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header  ">
+            <h1 class="modal-title fs-5  text-center " id="exampleModalLabel">ملاحظة</h1>
+          </div>
+          <div class="modal-body text-center" dir="rtl">
+            هل انت متأكد من هذا الرقم ؟
+          </div>
+          <div class="modal-footer modal-footer-special text-center">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              style="padding: 2% 6% !important; font-size: 15px !important; ">لا</button>
+            <button type="button " class="btn btn-primary modal-change2 fw-bold" data-bs-dismiss="modal"
+              style="padding: 2% 6% !important; font-size: 15px !important; ">نعم </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+  </div>
+
+  <!-- organization section end -->
+
+  <!-- people section start  -->
+  <div class="people-section">
+    <div class="container" style="margin-bottom: 0 !important;">
+
+      <div class="header-people section-title text-center ">
+        <h2> قائمة المرغوبات </h2>
+      </div>
+
+
+      <div class="down-side">
+
+        <div class="container">
+          <div class="form-land row " dir="rtl" style="
+              border-radius: 30px;
+          ">
+
+
+
+
+            <!-- ----------------------------------------------------------------------
+                         -->
+
+
+
+
+            <div class="about-content text-center">
+              <h2 class="section-title " style="font-size: 26px !important ;"> ابحث عن رقم الهاتف المطلوب </h2>
+
+              <div class="search-area row">
+                <div class="col-12 search wrapper text-end " style="position: relative;">
+
+                  <input type="search" name="search" placeholder="اكتب رقم الهاتف" id="special-search-phone">
+                  <button> <i class="fa-solid fa-magnifying-glass"></i></button>
+
+                  <div class="results col-12 text-center" style="height: fit-content; margin-top: 0 !important;">
+                    <ul>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+
+            <!-- ----------------------------------------------------------------------
+                         -->
+            <div class="card-area " style="display: none;">
+
+              <div class="col-12">
+
+                <div class="about-content text-center">
+                  <h2 class="section-title "> الموجودات </h2>
+
+                  <div class="search-area row">
+                    <div class="col-12 search2 " style="position: relative;">
+                      <input type="search" name="search" placeholder="اكتب كلمات البحث..." id="special-search">
+                      <button> <i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                  </div>
+
+
+                  <div class="card-content text-center">
+
+
+                    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+                      {% for item in items %}
+                        <div class="col-md-4  col-lg-3 special-card">
+                          <div class="card h-100 ">
+                            <div class="img-card-container">
+
+                              <img src="{{item.0.img.url}}" class="card-img-top" style="width: 250px !important;
+                                        height: 250px !important;
+                                        border-radius: 50% !important;
+                                        margin-top: 10px;" alt="...">
+
+                            </div>
+
+                            <div class="card-body">
+                              <h5 class="card-title"> {{item.0.name}}
+                              </h5>
+                              <p class="card-text fw-bold" dir="rtl">
+                                الرقم : <span>{{item.0.id}}</span>
+                              </p>
+                            </div>
+                            <form method="post" class="card-footer text-center" dir="rtl">
+                              {% csrf_token %}
+                              <input type="hidden" name="beneficiary_id" value="{{request.GET.beneficiary_id}}">
+                              
+                              <!-- <input name="desire" class="number-input text-center" type="number"
+                                {% if request.GET.beneficiary_id|safe == item.2|safe %}
+                                  value="{{item.1}}"
+                                {% else %}
+                                  value="5"
+                                {% endif %} 
+                               min="0" max="10"> -->
+                               {% if request.GET.beneficiary_id|safe == item.2|safe %}
+                                <select name="desire" class="number-input text-center" id="">
+                                    <option {% if item.1 == 0 %}selected{% endif %} value="0">0</option>
+                                    <option {% if item.1 == 5 %}selected{% endif %} value="5">5</option>
+                                    <option {% if item.1 == 6 %}selected{% endif %} value="6">6</option>
+                                    <option {% if item.1 == 7 %}selected{% endif %} value="7">7</option>
+                                    <option {% if item.1 == 8 %}selected{% endif %} value="8">8</option>
+                                    <option {% if item.1 == 9 %}selected{% endif %} value="9">9</option>
+                                    <option {% if item.1 == 10 %}selected{% endif %} value="10">10</option>
+                                </select>
+                               {% else %}
+                                <select name="desire" class="number-input text-center" id="">
+                                  <option value="0">0</option>
+                                  <option selected value="5">5</option>
+                                  <option value="6">6</option>
+                                  <option value="7">7</option>
+                                  <option value="8">8</option>
+                                  <option value="9">9</option>
+                                  <option value="10">10</option>
+                                </select>
+                                {% endif %} 
+                              <button id="readmore" name="item_desire" value="{{item.0.id}}" class="btn btn-outline-dark main-btn  special-sumbit-btn"
+                                style="color: white; width: 100% !important;">ارسال</button>
+
+
+                            </form>
+
+
+                          </div>
+                        </div>
+                      {% endfor %}
+
+
+                    </div>
+
+                  </div>
+
+                  <div class="blockquote-footer text-end fw-bold"
+                    style="font-size: 20px !important; margin-top:30px !important;">
+                    في حالة لم يكن المرغوب في الموجودات
+                    <button type="button" class="btn btn-outline-dark main-btn not-done" data-bs-toggle="offcanvas"
+                      data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"
+                      style="color: white; padding: 10px !important; margin-top: 0;">اضغط هنا </button>
+                  </div>
+
+                  <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop"
+                    aria-labelledby="staticBackdropLabel">
+                    <div class="offcanvas-header">
+                      <h5 class="offcanvas-title section-title" id="staticBackdropLabel" style="    font-size: 3rem !important;
+                                  font-weight: 800 !important;
+                                 margin-top: 0 !important; 
+                                  color: var(--secondary-color) !important;">تعبئة البيانات</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="offcanvas-body">
+                      <form method="post" class="right-side-form col-12 col-md-12">
+
+
+                        <div class="row">
+                          <!-- ---------- -->
+                          <div class="blockquote-footer text-end fw-bold"
+                            style="font-size: 20px !important; margin-top: 10px !important; color:#60cd12;">
+                            في حالة لم يكن المرغوب في الموجودات , قم بوصف المرغوب ليتم طلب اضافة 
+                            مرغوب جديد لقاعدة البيانات
+                          </div>
+
+                          <div class="form-land-textboxes row" dir="ltr">
+
+                            <!-- <div class="form-floating mb-3 col-6">
+                                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput ">الايميل</label>
+                                      </div> -->
+                            <!-- ---------- -->
+
+                            <!-- <div class="form-floating col-6">
+                                        <input  class="form-control" id="floatingPassword" placeholder="Password">
+                                        <label for="floatingPassword">الاسم </label>
+                                      </div> -->
+                            <!-- ---------- -->
+                            <!-- <div class="form-floating mb-3 col-6 special-text-form">
+                                        <input  class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <label for="floatingInput">عنوانك</label>
+                                      </div> -->
+                            <!-- ---------- -->
+
+
+                            <!-- ---------- -->
+                            {% csrf_token %}
+                            <div class="form-floating col-12 special-text-form">
+                              <textarea name="bio" class="form-control" dir="rtl" placeholder="Leave a comment here" id="floatingTextarea"
+                                style="
+                                  min-height: 15rem;
+                                  font-size: 15px;
+                                  font-weight: 400;
+                                    "></textarea>
+                              <label for="floatingTextarea">التعليق</label>
+                            </div>
+                            <!-- ---------- -->
+                          </div>
+
+                          <button name="item_demand" class=" btn-outline-dark main-btn  col-6 col-sm-6 col-md-4" type="submit">
+                            ارسل رسالة
+                          </button>
+
+                        </div>
+
+                      </form>
+                    </div>
+
+
+
+                  </div>
+
+
+
+                </div>
+              </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+
+
+  </div>
+
+
+  </div>
+
+  <!-- people section end   -->
+
+
+
+
+  <div class="toast-container position-fixed  p-3 ">
+    <div id="liveToast-special" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+
+      <div class="toast-header-special " style=" padding: 5px 4px; background-color:#061738 !important ;     display: flex;
+      justify-content: space-between; align-items: center;">
+     
+        <img src="{% static 'img/organization/people.png' %}" class="rounded me-2" alt="...">
+        <strong class="me-auto strong-special" style="color: #60cd12; width: 100%;text-align: right;padding-right: 5px;"> ملاحظة جديدة</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close" style="background-color: #60cd12 !important;"></button>
+    
+      </div>
+      <div class="toast-body-special" style="background-color:#03262c; padding: 10px 5px !important;color: #60cd12; text-align: right;">
+        virualt body text 
+      </div>
+    </div>
+  </div>
+
+
+
+  {% if request.GET.beneficiary_id %}
+  <script>
+    document.querySelector('.about-content').style.display = "none"
+    document.querySelector('.card-area').style.display ="block"
+  </script>
+  {% endif %}
+
+  <!-- bootstrap file js   -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+  <!-- main js file  -->
+  <script src="{% static 'javascript/organization.js' %}"></script>
+  <!-- jquery number input -->
+  <script src="{% static 'javascript/jquery.nice-number.js' %}"></script>
+
+  <script>
+    // ----------------- toast start
+
+
+
+
+function toast_apearing( header , body ){
+  const liveToast_special = document.getElementById('liveToast-special');
+const liveToast_special2 = new bootstrap.Toast(liveToast_special)
+
+const toastheader_special = document.getElementsByClassName("toast-header-special")[0]
+const header_strong = document.getElementsByClassName("strong-special")[0]
+const toastbody_special = document.getElementsByClassName("toast-body-special")[0] 
+  header_strong.textContent = ""   ;
+  toastbody_special.textContent = "" ; 
+  header_strong.textContent = header ; 
+  toastbody_special.textContent = body ; 
+  liveToast_special2.show()
+}
+</script>
+
+
+{% if tost %}
+<script>
+toast_apearing( "{{tost_hader}}" , " {{tost_body}}");
+</script>
+
+{% endif %}
+
+  <script>
+    let searchable = {{beneficiaries_phones|safe}};
+
+    const searchInput2 = document.getElementById('special-search-phone');
+    const searchWrapper = document.querySelector('.wrapper');
+    const resultsWrapper = document.querySelector('.results');
+
+    searchInput2.addEventListener('keyup', () => {
+      let results = [];
+      let input = searchInput2.value;
+      if (input.length >= 3) {
+        results = searchable.filter((item) => {
+          return item[0].toLowerCase().includes(input.toLowerCase());
+        });
+      }
+      renderResults(results);
+    });
+
+    function renderResults(results) {
+      if (!results.length) {
+        return searchWrapper.classList.remove('show');
+      }
+
+      const content = results
+        .map((item) => {
+          return `<a href="?beneficiary_id=${item[1]}"><li class="phone-lis" >${item[0]}</li></a>`;
+        })
+        .join('');
+
+      searchWrapper.classList.add('show');
+      resultsWrapper.innerHTML = `<ul>${content}</ul>`;
+    }
+
+    // -------------------- modal li 
+    let done_btn = document.getElementsByClassName("modal-change2")[1];
+    let modal2 = document.getElementsByClassName("modal")[1];
+    let phonelis = document.getElementsByClassName("phone-lis")
+    let about_content = document.getElementsByClassName("about-content")[0];
+    let card_area = document.getElementsByClassName("card-area")[0];
+
+    console.log(phonelis)
+  </script>
+
+</body>
+
+</html>

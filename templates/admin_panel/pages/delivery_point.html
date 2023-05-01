@@ -1,0 +1,159 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="p4">
+    <div class="modal fade" id="name"  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form method="post">
+            {% csrf_token %}
+            <div class="modal-dialog ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">اضافة مركز تبرع</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <div style="float: right;">: الاسم</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="اسم مركز التبرع" required class="form-control" name="name"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: النوع </div>
+                        <div class="form-group">
+                        <select name="type" id="" dir="rtl" placeholder="نوع مركز التبرع" required class="form-control"   style="float: right;">
+                            <option value="" selected disabled>اختر</option>
+                            <option value="mosque">مسجد</option>
+                            <option value="Charity">مؤسسة خيرية</option>
+                            <option value="other">اخر</option>
+                        </select>
+                        </div>
+
+                        <div style="float: right;">: العنوان</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="عنوان مركز التبرع" required class="form-control" name="address"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: (longtude)احداثيات خط الطول</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="احداثيات خط الطول لمركز التبرع" required class="form-control" name="long"  style="float: right;">
+                        </div>
+
+                        <div style="float: right;">: (latitude)احداثيات خط العرض</div>
+                        <div class="form-group">
+                            <input type="text" dir="rtl" placeholder="احداثيات خط الطول لمركز التبرع" required class="form-control" name="Lat"  style="float: right;">
+                        </div>
+
+
+                        <div style="float: right;">: (admin)المسؤول </div>
+                        <div class="form-group">
+                        <select name="user" id="" dir="rtl" placeholder="تبرعات المستلزمات الدراسية" required class="form-control"   style="float: right;">
+                            <option value="" selected disabled>اختر</option>
+                            {% for admin in admins_ac %}
+                            <option value="{{admin.id}}" >{{admin.username}}</option>
+                            {% endfor %}
+                        </select>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">الغاء</button>
+                        <button type="submit" class="btn btn-primary" name="add">اضافة</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="uper">
+        <div class="models sp">
+        <h1 style="" class="hme">مراكز التبرع</h1>
+        <div style=" font-size: x-large;"><button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#name">اضافة مركز تبرع</button></div>
+        </div>
+
+    </div>
+    <br>
+
+
+    <form  method="GET" class="models">
+        <div class="input-group  ds" style="width: 30% !important;">
+          <button class="btn btn-outline-secondary"name="dt" id="button-addon1">تصفية</button>
+          <input type="date" required class="form-control"name="data_as"  placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1"value="{{data_as}}">
+        </div>
+
+    </form>
+
+    {% if  day_delivery_points %}
+        <div class="models sp">
+            <h5 style="margin-top: 50px;" class="hme" >مركز تبرع الذين تم تسجيلهم في تاريخ {{data_as}}</h5>
+        </div>
+        <table class="table table-hover" style="width: 100%; margin-top: 0px;">
+            <thead>
+                <tr>
+                    <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                    <th style="width: 10%;"><center>admin</center></th>
+                    <th style="width: 10%;"><center>احداثي العرض</center></th>
+                    <th style="width: 10%;"><center>احداثي الطول</center></th>
+                    <th style="width: 10%;"><center>العنوان</center></th>
+                    <th style="width: 10%;"><center>النوع</center></th>
+                    <th style="width: 10%;"><center>الاسم</center></th>
+                </tr>
+              </thead>
+            <tbody id="output1" style="width: 100%;">
+                {% for delivery_point in day_delivery_points %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.user}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.Lat}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.long}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.address}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.name}}</td>
+
+                </tr>                 
+            {% endfor %}
+                
+            </tbody>
+        </table>
+    {% endif %}
+
+    <table class="table table-hover" style="width: 100%; margin-top: 50px;">
+        <thead>
+            <tr>
+                <th style="width: 10%;"><center>تاريخ التسجيل</center></th>
+                <th style="width: 10%;"><center>admin</center></th>
+                <th style="width: 10%;"><center>احداثي العرض</center></th>
+                <th style="width: 10%;"><center>احداثي الطول</center></th>
+                <th style="width: 10%;"><center>العنوان</center></th>
+                <th style="width: 10%;"><center>النوع</center></th>
+                <th style="width: 10%;"><center>الاسم</center></th>
+            </tr>
+          </thead>
+        <tbody id="output1" style="width: 100%;">
+            {% for delivery_point in delivery_points %}
+                <tr dir="rtl"> 
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.entry_date|date:"m-d"}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.user}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.Lat}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.long}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.address}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.type}}</td>
+                    <td style=" text-align:center; width: 10%;">{{delivery_point.name}}</td>
+
+                </tr>                  
+            {% endfor %}
+            
+        </tbody>
+    </table>
+
+
+    <br>
+
+
+</div>
+
+{% endblock body %}

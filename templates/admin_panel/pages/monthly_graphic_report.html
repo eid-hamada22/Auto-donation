@@ -1,0 +1,378 @@
+{% load static %} {% load mathfilters %}
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="{% static 'css/monthly_graphic_report.css' %}"
+    />
+    <title>النظام الاداري | {{title}}</title>
+  </head>
+  <div></div>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  </head>
+  <body>
+    <div class="p4">
+      <div style="font-size: xx-large"><center>البيان الشهري</center></div>
+      <div class="rf">
+        <div style="font-size: large">
+          التاريخ : من {{friday|date:"Y-m-d"}} الى {{today|date:"Y-m-d"}}
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="p4">
+      <div style="font-size: x-large"><center>التسجيلات الجديدة</center></div>
+      {% comment %} <br />
+      {% endcomment %}
+      <table class="table table-hover tp" style="width: 50%; z-index: 51">
+        <tbody id="output1" style="width: 100%">
+          <tr>
+            <td style="text-align: center; width: 25%">
+              {{month_beneficiary}}
+            </td>
+            <td style="text-align: center; width: 25%">مُستفيدين جدد</td>
+          </tr>
+          <tr>
+            <td style="text-align: center">{{month_donations}}</td>
+            <td style="text-align: center">تبرعات</td>
+          </tr>
+          <tr>
+            <td style="text-align: center">{{month_items}}</td>
+            <td style="text-align: center">عناصر جديدة</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-hover tp" style="width: 50%">
+        <tbody id="output1" style="width: 100%">
+          <tr>
+            <td style="text-align: center; width: 25%">{{month_beneficiary|add:month_donations|add:month_items}}</td>
+            <td style="text-align: center; width: 25%">المجموع</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <hr style="margin-top: 10px; width: 100%; z-index: 11" />
+    <div class="p4">
+      <div style="font-size: x-large; float: right; padding-right: 50px">
+        <center>: المستفيدين الجدد</center>
+      </div>
+
+      <div class="p4row">
+        <div class="d1" style="width: 100%; height: 400px">
+          <canvas
+            id="myChart"
+            width="100"
+            height="100"
+            style="width: 100%"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="p4">
+      <div style="font-size: x-large; float: right; padding-right: 50px">
+        <center>: تسجيل العناصر  وتمنيات العناصر</center>
+      </div>
+
+      <div class="p4row pr">
+        <div class="d1" style="width: 100%; height: 400px">
+          <canvas
+            id="myChart4"
+            width="100"
+            height="100"
+            style="width: 100%"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+    <br class="dsc" />
+
+    <hr />
+    <div class="p4">
+      <div style="font-size: x-large; float: right; padding-right: 50px">
+        <center>: التبرعات اليومية</center>
+      </div>
+ 
+      <div class="p4" style="align-items: flex-start">
+        <div style="width: 100%">
+
+          <br />
+          <table class="table table-hover tp">
+            <tbody id="output1" style="width: 100%">
+              <tr>
+                <td style="text-align: center; width: 50%">
+                  مجموع تبرعات الشهر السابق : {{last_month_donations}}
+                </td>
+                <td style="text-align: center; width: 50%">
+                  مجموع تبرعات الشهر الحالي : {{month_donations}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br />
+
+        <div class="d2" style="width: 100%; left: 0; height: 500px">
+          <canvas
+            id="myChart3"
+            width="100"
+            height="100"
+            style="width: 100%"
+          ></canvas>
+        </div>
+      </div>
+    </div>
+    <script>
+        window.onload=function(){
+          var ctx = document.getElementById("myChart").getContext("2d");
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+          data: {
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            datasets: [
+                  {
+                      label: "العدد",
+                      data: {{month_beneficiary_daily}},
+                        backgroundColor: [
+                        'rgb(51, 102, 204)',  // Bar 1
+                        'rgb(51, 102, 204)',  // Bar 2
+                        'rgb(51, 102, 204)',  // Bar 3
+                        'rgb(51, 102, 204)',  // Bar 4
+                        'rgb(51, 102, 204)', // Bar 5
+                        'rgb(51, 102, 204)',   // Bar 6
+                        'rgb(220, 57, 18)'   // Bar 7
+
+                      ],
+
+                  }
+
+              ],
+
+          },
+          plugins: [ChartDataLabels],
+
+          options: {
+                  indexAxis: 'x',
+            // Elements options apply to all of the options unless overridden in a dataset
+            // In this case, we are setting the border of each horizontal bar to be 2px wide
+            elements: {
+              bar: {
+                borderWidth: 2,
+              }
+            },
+            plugins:{
+              labels: {
+                      fontcolor:'#fff',
+                        render:'value',
+                        position:'border',
+
+                    },
+            datalabels: {
+                        color: "#fff",
+                        anchor: 'center',
+                        align :'center',
+                        clamp: true
+                      },
+
+
+            },
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+          },
+
+        })
+
+
+
+
+      var ctx3 = document.getElementById("myChart3").getContext("2d");
+      var myChart3 = new Chart(ctx3, {
+        type: 'line',
+          data: {
+              labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+              datasets: [
+                  {
+                      label: "تبرعات الشهر الحالي",
+                      data: {{month_donation_daily}},
+                        backgroundColor: [
+                        'rgb(51, 102, 204)',  // Bar 1
+                        'rgb(51, 102, 204)',  // Bar 2
+                        'rgb(51, 102, 204)',  // Bar 3
+                        'rgb(51, 102, 204)',  // Bar 4
+                        'rgb(51, 102, 204)', // Bar 5
+                        'rgb(51, 102, 204)',   // Bar 6
+                        'rgb(51, 102, 204)'   // Bar 7
+
+                      ],
+                      borderColor: "rgb(51, 102, 204)",
+
+                  },
+                  {
+                    label: "تبرعات الشهر السابق",
+                    data: {{last_month_donation_daily}},
+                        backgroundColor: [
+                        '#f5f5f5',  // Bar 1
+                        '#f5f5f5',  // Bar 2
+                        '#f5f5f5',  // Bar 3
+                        '#f5f5f5',  // Bar 4
+                        '#f5f5f5', // Bar 5
+                        '#f5f5f5',   // Bar 6
+                        '#f5f5f5'   // Bar 7
+
+                      ],
+                      borderColor: "#000",
+                  }
+              ],
+
+          },
+          // plugins: [ChartDataLabels],
+
+          options: {
+                  indexAxis: 'x',
+            // Elements options apply to all of the options unless overridden in a dataset
+            // In this case, we are setting the border of each horizontal bar to be 2px wide
+            elements: {
+              bar: {
+                borderWidth: 2,
+              }
+            },
+            plugins:{
+              labels: {
+                      fontcolor:'#fff',
+                        render:'value',
+                        position:'border',
+
+                    },
+            datalabels: {
+                        color: "#000",
+                        anchor: 'center',
+                        align :'start',
+                        clamp: true
+                      },
+
+
+            },
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+          },
+
+        })
+
+      var ctx4 = document.getElementById("myChart4").getContext("2d");
+
+        var myChart4 = new Chart(ctx4, {
+        type: 'bar',
+          data: {
+            labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31],
+            datasets: [
+                  {
+                      label: "العناصر",
+                      data: {{month_items_daily}},
+                        backgroundColor: [
+                        'rgb(220, 57, 18)',  // Bar 1
+                        'rgb(220, 57, 18)',  // Bar 2
+                        'rgb(220, 57, 18)',  // Bar 3
+                        'rgb(220, 57, 18)',  // Bar 4
+                        'rgb(220, 57, 18)', // Bar 5
+                        'rgb(220, 57, 18)',   // Bar 6
+
+
+                      ],
+
+                  },
+                  {
+                    label: "تمنايات العناصر",
+                    data:{{month_items_desire_daily}},
+                      backgroundColor: [
+                      '#f5f5f5',  // Bar 1
+                      '#f5f5f5',  // Bar 2
+                      '#f5f5f5',  // Bar 3
+                      '#f5f5f5',  // Bar 4
+                      '#f5f5f5', // Bar 5
+                      '#f5f5f5',   // Bar 6
+
+
+                    ],
+
+                }
+              ],
+
+          },
+          plugins: [ChartDataLabels],
+
+          options: {
+                  indexAxis: 'x',
+            // Elements options apply to all of the options unless overridden in a dataset
+            // In this case, we are setting the border of each horizontal bar to be 2px wide
+            elements: {
+              bar: {
+                borderWidth: 2,
+              }
+            },
+            plugins:{
+              labels: {
+                      fontcolor:'#fff',
+                        render:'value',
+                        position:'border',
+
+                    },
+            datalabels: {
+                        color: "#000",
+                        anchor: 'center',
+                        align :'start',
+                        clamp: true
+                      },
+
+
+            },
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+          },
+
+        })
+
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
+      integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://unpkg.com/chart.js-plugin-labels-dv/dist/chartjs-plugin-labels.min.js"></script>
+  </body>
+</html>

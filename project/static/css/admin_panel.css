@@ -1,0 +1,207 @@
+/*===== GOOGLE FONTS =====*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+.mode {
+    width: 18rem;
+    margin: 10px;
+}
+
+.p4 {
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px;
+}
+.models{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+.models.sp{
+    justify-content: space-between;
+
+}
+
+.uper{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/*===== BASE =====*/
+
+body {
+    position: relative;
+    margin: 0;
+    padding: 2rem 0 0 6.75rem;
+    font-size: 1em;
+    transition: .5s;
+}
+
+h1 {
+    margin: 0;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+/*===== l NAV =====*/
+.l-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 92px;
+    height: 100vh;
+    background-color: #12192C;
+    color: #FFF;
+    padding: 1.5rem 1.5rem 2rem;
+    transition: .5s;
+    z-index: 100;
+}
+
+/*===== NAV =====*/
+.nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.nav__brand {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.nav__toggle {
+    font-size: 1.25rem;
+    padding: .75rem;
+    cursor: pointer;
+}
+
+.nav__logo {
+    color: #FFF;
+    font-weight: 600;
+}
+
+.nav__link {
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    column-gap: .75rem;
+    padding: .75rem;
+    color: #FFF;
+    border-radius: .5rem;
+    margin-bottom: 1rem;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.nav__link:hover {
+    background-color: #0C5DF4;
+    color: #fff !important;
+}
+
+.nav__icon {
+    font-size: 2.5rem;
+}
+
+.nav__name {
+    margin-left: 20px;
+    font-size: .875rem;
+}
+
+/*Expander menu*/
+.expander {
+    width: calc(92px + 9.25rem);
+
+}
+
+/*Add padding body*/
+.body-pd {
+    padding: 2rem 0 0 16rem;
+
+
+}
+
+/*Active links menu*/
+.active {
+    background-color: #0C5DF4;
+}
+
+/*===== COLLAPSE =====*/
+.collapse {
+    grid-template-columns: 20px max-content 1fr;
+}
+
+.collapse__link {
+    justify-self: flex-end;
+    transition: .5s;
+}
+
+.collapse__menu {
+    display: none;
+    padding: .75rem 2.25rem;
+}
+
+.collapse__sublink {
+    color: #B6CEFC;
+    font-size: .875rem;
+}
+
+.collapse__sublink:hover {
+    color: white;
+}
+
+/*Show collapse*/
+.showCollapse {
+    display: block;
+}
+
+/*Rotate icon*/
+.rotate {
+    transform: rotate(180deg);
+}
+
+.nav::-webkit-scrollbar {
+    width: 5px;
+    /* width of the entire scrollbar */
+    margin-left: auto;
+}
+
+.nav::-webkit-scrollbar-track {
+    background: none;
+    /* color of the tracking area */
+}
+
+.nav::-webkit-scrollbar-thumb {
+    background-color: black;
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 3px solid none;
+    /* creates padding around scroll thumb */
+}

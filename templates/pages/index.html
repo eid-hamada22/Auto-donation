@@ -1,0 +1,791 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- the website icon  -->
+  <link rel="shortcut icon" href="{% static 'img/donation-low-resolution-logo-color-on-transparent-background.png' %}"
+    type="image/x-icon">
+  <!-- main css file  -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <!-- bootstrap file css -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <!--  font awsome library  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <!-- project title -->
+  <title>auto donation</title>
+
+
+
+  <!-- for the map  -->
+  <script src="https://cdn.maptiler.com/maplibre-gl-js/v2.4.0/maplibre-gl.js"></script>
+  <link href="https://cdn.maptiler.com/maplibre-gl-js/v2.4.0/maplibre-gl.css" rel="stylesheet" />
+
+
+
+</head>
+
+<body>
+  <!-- Navbar Section Start -->
+  <header id="full_nav">
+    <div class="header">
+      <div class="container">
+        <nav class="navbar navbar-expand-lg">
+          <a class="navbar-brand" href="index.html">
+            <img style="
+                        transform: scale(1.5);
+                        margin-left: 10px !important;
+                    " src="{% static 'img/donation-low-resolution-logo-color-on-transparent-background.png' %}" alt="">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
+            aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-stream navbar-toggler-icon"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="navbar-nav mx-auto">
+
+              <li class="nav-item">
+                <a class="nav-link" href="#contact-section">تواصل معنا</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'pages:login' %}">تسجيل الجمعية</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#donation-process"> كيف يتم التبرع </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#about-landing-section">أهمية تبرعك </a>
+              </li>
+
+
+              <li class="nav-item">
+                <a class="nav-link active" href="#landing-page-section">الصفحة الرئيسية</a>
+              </li>
+
+            </ul>
+
+            <div class="header_right">
+              <div class="text-lg-end">
+                <button type="button" class=" btn-outline-dark main-btn "
+                  onclick="window.location.href='#donation-section'" id="dontation">تبرع</button>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <!-- Navbar Section Exit -->
+
+  <!-- start landing -->
+  <div class="landing-page" id="landing-page-section">
+    <div class="container">
+      <div class="row flex-row-reverse">
+
+        <div class="col-6 text-area-land  text-end">
+          <div class="row align-items-center text-end">
+            <h1 style="margin-right: 10px
+            ;" dir="rtl">auto donation , هي اول مؤسسة مؤتمتة </h1>
+            <h4 class="fw-bold" dir="rtl">auto donation , هي اول مؤسسة خيرية مؤتمتة بالكامل تقوم بتوزيع التبرعات للمحتاجين بشكل الكتروني اوتماتيكي ,تستهدف الفقراء المحاتجين للملابس والمسلزمات الدراسية والمتبرعين لهما, تهدف من ادخال التكنولوجيا في عمليات التبرع الى تسهيل وتدقيق الوصول لافضل ادراة وتوزيع التبرعات "التي تتبرع في نقاط تبرع تطوعية تابعة لنا مثل المساجد والمؤسسات الخيرية الحكومية" عن طريق ادخال معادلات رياضية والذكاء الاصطناعي تقوم بتحديد افضل مستفيد للتبرع بنائاً على عوامل مثل البعد وشدة الفقر لتحل الكثير من المشاكل في مجال التبرع محسوسة ومؤثرة  .
+
+
+            </h4>
+          </div>
+
+          <a type="button" id="readmore" href="#about-landing-section" class="btn btn-outline-dark main-btn "
+            style="color: white;">اقرأ اكثر</a>
+
+        </div>
+
+
+
+
+        <div class="col-6 aimated-picture">
+          <img src="{% static 'img/Credit_assesment.gif' %}" alt="">
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- end landing  -->
+
+  <!-- about start  -->
+  <section class="about-landing-section" id="about-landing-section">
+    <div class="container">
+      <div class="row align-items-center">
+
+        <div class="col-12">
+          <div class="about-content text-center">
+            <h2 class="section-title ">أهمية تبرعك </h2>
+
+            <div class="card-content text-center">
+
+
+              <div class="row row-cols-1 row-cols-md-3 g-4 flex-row-reverse">
+
+                <div class="col-md-4">
+                  <div class="card h-100">
+
+                    <div class="img-card-container">
+                      <img src="{% static 'img/about/World Humanitarian Day-pana.svg' %}" class="card-img-top"
+                        alt="...">
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">مساعدة المجتمع
+                      </h5>
+                      <p class="card-text fw-bold" dir="rtl">تبرع المكتفي للفقير يحسن المجتمع ويزيد التألف والانتماء له
+                        ,ويقلل من حاجة الفقير ويحسن حياته , وهو من افضل الاعمال في الاسلام, ويكون له تابعيات اقتصادية
+                        ايجابية.
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <a type="button" id="readmore" href="#donation-section" class="btn btn-outline-dark main-btn "
+                        style="color: white;">تبرع</a>
+                    </div>
+
+
+                  </div>
+                </div>
+
+
+                <div class="col-md-4">
+                  <div class="card h-100">
+                    <div class="img-card-container">
+
+                      <img src="{% static 'img/about/Learning-bro.svg' %}" class="card-img-top" alt="...">
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">التشجيع على التعلم
+                      </h5>
+                      <p class="card-text fw-bold" dir="rtl">العلم هو نهضة الشعوب , والتعليم متطلب يطلبه الفقير والغني ,
+                        لكن الفقر يصعب عملية التعليم وقد يبطلها حتى , تبرعك يخفف من صعوبة العملية.
+
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <a type="button" id="readmore" href="#donation-section" class="btn btn-outline-dark main-btn "
+                        style="color: white;">تبرع</a>
+                    </div>
+
+
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="card h-100">
+                    <div class="img-card-container">
+
+                      <img src="{% static 'img/about/Natural Resource Depletion-amico.svg' %}" class="card-img-top"
+                        alt="...">
+                    </div>
+
+                    <div class="card-body">
+                      <h5 class="card-title">الحفاظ على البيئة
+                      </h5>
+                      <p class="card-text fw-bold" dir="rtl">رمي الملابس يعد كارثة مناخية بسبب احتواء الملابس على مشتقات
+                        نفطية , ورمي الاوراق والاحبار لا يقل عن ذلك, التبرع بهم يقلل ذلك.
+
+                      </p>
+                    </div>
+                    <div class="card-footer">
+                      <a type="button" id="readmore" href="#donation-section" class="btn btn-outline-dark main-btn "
+                        style="color: white;"> تبرع</a>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+  <!-- about end   -->
+  <!-- dontation process start  -->
+  <h1 class="text-center section-title" id="donation-process">كيف يتم التبرع</h1>
+
+  <section id="steps">
+    <div class="container">
+      <div class="accordion" id="accordionExample">
+
+        <div class="steps" dir="RTL">
+
+          <progress id="progress" value=0 max=100></progress>
+
+          <div class="step-item">
+            <button class="step-button text-center" type="button" data-toggle="collapse" data-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne">
+              1
+            </button>
+            <div class="step-title">
+              الخطوة الاولى
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-toggle="collapse"
+              data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              2
+            </button>
+            <div class="step-title">
+              الخطوة الثانية
+            </div>
+          </div>
+          <div class="step-item">
+            <button class="step-button text-center collapsed" type="button" data-toggle="collapse"
+              data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              3
+            </button>
+            <div class="step-title">
+              الخطوة الثالثة
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div id="headingOne">
+
+          </div>
+
+          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body text-end">
+              <h5 class="card-title">تسجيل التبرع </h5>
+              <h3 class="card-subtitle mb-2 text-muted"> الخطوة الاولى</h3>
+              <p class="card-text" dir="RTL">تتمثل الخطوة الاولى في تسجيل التبرع في قاعدة البيانات عن طريق عامل بشري في
+                اماكن التبرع التي نديرها , حيث بعد استلام التبرع من المتبرع يقوم موظف بادخال التبرع وتفاصيله داخل قاعدة
+                البيانات , وهي الخطوة الوحيدة التي يدخل فيها العامل البشري , ثم ننتقل الى الخطوة الثانية.</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="headingTwo">
+
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body text-end">
+              <h5 class="card-title">تحديد المستفيد</h5>
+              <h6 class="card-subtitle mb-2 text-muted"> الخطوة الثانية</h6>
+              <p dir="RTL"> بعد اتمام الخطوة الاولة المتمثلة بتسجيل التبرع , تقوم شفرة برمجية بتحديد واحد من المستفيدين
+                المسجلين مسبقاً في قاعدة البيانات بنائاً على العوامل التالية:
+
+              </p>
+              <p class="card-text">
+              <ul dir="RTL">
+                <li>حاجة المستفيد , حيث نقوم بتسجيل حقل في بيانات كل مستفيد حيث يمثل مقدار حاجة الشخص من 10 بنائاً على
+                  عدة عوامل.</li>
+                <li>بعد المستفيد عن مكان التبرع حيث كل ما كان المستفيد ابعد قل فرصته في الحصول على التبرع.</li>
+                <li>نوع التبرع (ملابس - مستلزمات دراسية).</li>
+                <li>نوع التبرع الذي يحتاجه المستفيد (ملابس - مستلزمات دراسية).</li>
+                <li>اخر استلام تبرع للمسفيد.</li>
+                <li>عوامل اخرى.</li>
+              </ul>
+
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div id="headingThree">
+
+          </div>
+          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+            <div class="card-body text-end">
+              <h5 class="card-title">تسليم المستفيد</h5>
+              <h6 class="card-subtitle mb-2 text-muted">الخطوة الثالثة</h6>
+              <p class="card-text" dir="RTL">بعد تحديد المستفيد الافضل في الخطوة السابقة , تقوم شفرة برمجية اخرى بجلب
+                رقم الهاتف المحمول المسجل مسبقاً للمستفيد المختار , وتقوم بارسال رسالة sms للرقم تتضمن تفاصيل التبرع
+                ومكان الاستلام , وتعطى مهلة 24 ساعة لاستلام التبرع وفي حال عدم قدوم المستفيد يتم اعادة اختيار المستفيد
+                الافضل مجدداً وارسال رسالة له.
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- dontation process end  -->
+
+  <!-- donation section start  -->
+  <section class="donation-section" id="donation-section">
+    <div class="section-title text-center">
+      اين تتبرع
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="right-donation-section col-12 col-lg-6">
+          <!-- <iframe class="brd"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6802.128712351276!2d34.44755002856255!3d31.522392336978335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14fd7f0575161c27%3A0x97fb16455f6f0215!2z2YXYs9is2K8g2YHZhNiz2LfZitmG!5e0!3m2!1sen!2s!4v1676201176743!5m2!1sen!2s"
+                        width="100%" height="100%"  allowfullscreen=""
+                        referrerpolicy="no-referrer-when-downgrade"></iframe> -->
+
+          <div id="map">
+
+          </div>
+
+        </div>
+
+        <div class="left-donation-section col-12 col-lg-6 text-end  row  justify-content-end">
+          <div class="section-title " dir="rtl">
+            اعرف اقرب موقع تبرع بالنسبة لك تابع لنا:
+            <div class="blockquote-footer text-end" style="font-size: 20px !important; margin-top: 10px !important;">
+              قد يحتاج ظهور النتائج بعضا من الوقت
+            </div>
+            <div dir="rtl" class="collapse special-map-collapse" id="collapseExample">
+              <div class="card card-body">
+                <div class="section-title">
+                  اقرب ثلاث نقاط تبرع بالنسبة لموقعك :
+                </div>
+                <ul dir="rtl">
+                  <li class="location-0">
+
+                  </li>
+                  <li class="location-1">
+
+                  </li>
+                  <li class="location-2">
+
+                  </li>
+                  <li class="location-3">
+
+                  </li>
+
+                </ul>
+
+
+
+              </div>
+            </div>
+            <button type="button" id="" class="btn btn-outline-dark main-btn align-self-end special-donation-button"
+              style="color: white; padding: 10px 40px !important; font-size: 20px; width: initial !important; margin-bottom: 20px; "
+              data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+              aria-controls="collapseExample"> احسب</button>
+
+
+
+
+          </div>
+
+
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+  </section>
+
+  <!-- donation section end  -->
+
+  <!-- contact start  -->
+  <section class="contact-us-section" id="contact-section">
+
+    <!-- <div class="up-side">
+        <div class="container">
+        <div class="row">
+            <h2 class="col-6 section-title">تواصل معنا</div>      
+            </div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#60cd12" fill-opacity="1" d="M0,320L48,282.7C96,245,192,171,288,138.7C384,107,480,117,576,122.7C672,128,768,128,864,106.7C960,85,1056,43,1152,26.7C1248,11,1344,21,1392,26.7L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+    </div> -->
+
+
+    </div>
+
+
+    <div class="down-side">
+
+      <div class="container">
+
+        <div class="title-content row justify-content-center text-center">
+
+          <div class="section-title col-12">
+            ابقى على تواصل
+          </div>
+
+          <div class="section-subtitle col-12 fw-bold">
+            هذا القسم يساعدك للتواصل معنا والتحقق من عملية تبرعك
+          </div>
+
+        </div>
+
+        <div class="form-land row">
+          <form method="post" class="right-side-form col-12 col-md-8">
+            {% csrf_token %}
+
+
+            <div class="row">
+              <!-- ---------- -->
+
+              <div class="form-floating mb-3 col-12 special-text-form">
+                <input name="name" required class="form-control" id="floatingInput" placeholder="">
+                <label for="floatingInput">الاسم *</label>
+              </div>
+              <!-- ---------- -->
+
+              <div class="form-floating mb-3 col-6">
+                <input name="email" required type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput ">الايميل *</label>
+              </div>
+              <!-- ---------- -->
+
+              <!-- ---------- -->
+
+              <div class="form-floating mb-3 col-6 special-text-form">
+                <input name="phone_num"  class="form-control" id="floatingInput" placeholder="name@example.com">
+                <label for="floatingInput">رقم الهاتف</label>
+              </div>
+              <!-- ---------- -->
+              <div class="form-floating col-12 special-text-form">
+                <textarea name="message" required class="form-control" placeholder="Leave a comment here" id="floatingTextarea" style="
+                            min-height: 15rem;
+                        "></textarea>
+                <label for="floatingTextarea">التعليق *</label>
+              </div>
+              <!-- ---------- -->
+
+
+              <button class=" btn-outline-dark main-btn  col-6 col-sm-6 col-md-4" type="submit">
+                ارسل رسالة
+              </button>
+
+            </div>
+
+          </form>
+
+
+
+          <div class="left-side-form col-12 col-md-4 ">
+
+            <ul class="info-box clearfix row ">
+
+              <li class="row  col-6 col-sm-12">
+                <i class="fas fa-phone-alt"></i>
+                <p class="fw-bold">اي سؤال؟ تواصل معنا</p>
+                <div>
+                  <a href="#" class="fw-bold">
+                    0598186423
+                  </a>
+                </div>
+
+              </li>
+
+
+
+              <li class="col-6 col-sm-12">
+                <i class="far fa-envelope-open"></i>
+                <p class="fw-bold">اي سؤال ؟ راسلنا</p>
+                <div>
+                  <a href="#" class="fw-bold">ahmed_mansoor@gmail.com</a>
+                </div>
+              </li>
+
+            </ul>
+
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+  </section>
+  <!-- contact end  -->
+
+
+
+
+
+  <!-- Footer section Start-->
+  <section class="footer_wrapper mt-3 mt-md-0">
+    <div class="container px-5 px-lg-0">
+      <div class="row">
+        <div class="col-sm-4 col-12 mb-5 mb-lg-0">
+          <h5>بعض المعلومات</h5>
+          <p class="mb-4 ps-0 company_details">بعض المعلومات عنا يمكنك من خلالها الاتصال بنا</p>
+          <div class="contact-info">
+            <ul class="list-unstyled">
+              <li><a href="#"><i class="fa fa-home me-3"></i> فلسطين , غزة</a></li>
+              <li><a href="#"><i class="fa fa-phone me-3"></i>0598186423</a></li>
+              <li><a href="#"><i class="fa fa-envelope me-3"></i>ahmed_mansoor@gmail.com</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm-4 col-12 mb-5 mb-lg-0">
+          <h5>التنقل السريع</h5>
+          <ul class="link-widget p-0">
+            <li style="margin-bottom: 10px !important;"><a href="#landing-page-section">الصفحة الرئيسية</a></li>
+            <li style="margin-bottom: 10px !important;"><a href="#about-landing-section">أهمية تبرعك</a></li>
+            <li style="margin-bottom: 10px !important;"><a href="#donation-process">كيف يتم التبرع</a></li>
+            <li style="margin-bottom: 10px !important;"><a href="{% url 'pages:login' %}">تسجيل الجمعية</a></li>
+            <li style="margin-bottom: 10px !important;"><a href="#donation-section">تبرع</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-4 col-12 mb-5 mb-lg-0">
+          <h5>مشترك جديد</h5>
+          <form class="form-group mb-4">
+            <input type="email" class="form-control bg-transparent special-input" placeholder="Enter Your Email Here">
+            <button type="submit" class="btn btn-outline-dark main-btn" style="color: white
+                             !important;">اشترك</button>
+          </form>
+          <h5>ابقى متصلا معنا</h5>
+          <ul class="social-network d-flex align-items-center p-0">
+            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#"><i class="fab fa-youtube"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </section>
+  <!-- Footer Section Exit  -->
+
+  {% comment %} <img id="radio" style="" src="{% static 'img/radio.png' %}" alt=""> {% endcomment %}
+
+
+  <script>
+    const mydonationbtn = document.getElementsByClassName("special-donation-button")[0];
+    const domlocation0 = document.getElementsByClassName("location-0")[0]
+    const domlocation1 = document.getElementsByClassName("location-1")[0]
+    const domlocation2 = document.getElementsByClassName("location-2")[0]
+    const domlocation3 = document.getElementsByClassName("location-3")[0]
+    const special_map_collapse = document.getElementsByClassName("special-map-collapse")[0]
+    const myorglocations = {{delivery_points_list|safe}}
+
+    let myneworglocation = []
+
+
+    // ---------- map 
+    const key = 'JfbSbp5OOjuDEf8cVutY';
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: `https://api.maptiler.com/maps/f8e63fe2-6cb8-4e10-928f-7dfad731b034/style.json?key=JfbSbp5OOjuDEf8cVutY`,
+      center: [34.464449, 31.504280],
+      zoom: 12
+    });
+
+    // for( let n = 0 ; n < myorglocations.length ; n++){
+
+    //     const place1 = new maplibregl.Marker()
+    //     .setLngLat([myorglocations[n][2], myorglocations[n][1]])
+    //     .addTo(map);
+    // map.on('error', function(err) {
+    //     throw new Error("To load the map, you must replace YOUR_MAPTILER_API_KEY_HERE first, see README");
+    // });
+
+    // }
+
+
+
+
+    maplibregl.setRTLTextPlugin(
+      'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-rtl-text/v0.2.3/mapbox-gl-rtl-text.js',
+      null,
+      true // Lazy load the plugin
+    );
+
+
+
+
+
+
+    // ---------- map 
+
+
+
+
+    mydonationbtn.onclick = function getLocation() {
+      myneworglocation = []
+      domlocation1.textContent = ""
+      domlocation2.textContent = ""
+      domlocation3.textContent = ""
+      mydonationbtn.textContent = " اعادة بحث";
+      special_map_collapse.style.display = "block"
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+
+
+
+    }
+
+
+
+    function showPosition(position) {
+
+      for (let i = 0; i < myorglocations.length; i++) {
+
+        let userlat = position.coords.latitude;
+        let userlong = position.coords.longitude;
+
+
+
+
+        var radlat1 = Math.PI * userlat / 180;
+        var radlat2 = Math.PI * myorglocations[i][1] / 180;
+
+        var theta = userlong - myorglocations[i][2];
+
+        var radtheta = Math.PI * theta / 180;
+
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        dist = dist * 1.609344
+        const orglocationwithnouns = [dist, myorglocations[i][0], myorglocations[i][2], myorglocations[i][1]]
+        myneworglocation.push(orglocationwithnouns);
+        console.log(myneworglocation)
+      }
+
+
+
+      myneworglocation.sort(function (a, b) { return a[0] - b[0] })
+
+      let im0 = document.createElement('img')
+      im0.src = '/static/img/placeholder.jpg'
+      im0.class = 'mark'
+      im0.alt = ''
+      let im1 = document.createElement('img')
+      im1.src = '/static/img/location.jpg'
+      im1.class = 'mark'
+      im1.alt = ''
+      let im2 = document.createElement('img')
+      im2.src = '/static/img/location.jpg'
+      im2.class = 'mark'
+      im2.alt = ''
+      let im3 = document.createElement('img')
+      im3.src = '/static/img/location.jpg'
+      im3.class = 'mark'
+      im3.alt = ''
+      domlocation0.appendChild(im0);
+      domlocation1.appendChild(im1);
+      domlocation2.appendChild(im2);
+      domlocation3.appendChild(im3);
+
+      domlocation0.append("موقعك")
+      domlocation1.append(myneworglocation[0][1] + "  ويبعد عنك بمقدار " + parseFloat(myneworglocation[0][0]).toFixed(2) + " كيلو مترا")
+      domlocation2.append(myneworglocation[1][1] + "  ويبعد عنك بمقدار " + parseFloat(myneworglocation[1][0]).toFixed(2) + " كيلو مترا")
+      domlocation3.append(myneworglocation[2][1] + "  ويبعد عنك بمقدار " + parseFloat(myneworglocation[2][0]).toFixed(2) + " كيلو مترا")
+
+      var geojson = {
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'type': 'Feature',
+            'properties': {
+              'message': 'موقعك الحالي',
+              'imgSrc': '/static/img/placeholder.jpg',
+              'iconSize': [60, 60]
+            },
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [position.coords.longitude, position.coords.latitude]
+            }
+          },
+          {
+            'type': 'Feature',
+            'properties': {
+              'message': myneworglocation[0][1],
+              'imgSrc': '/static/img/location.jpg',
+              'iconSize': [50, 50]
+            },
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [myorglocations[0][2], myorglocations[0][1]]
+            }
+          },
+          {
+            'type': 'Feature',
+            'properties': {
+              'message': myneworglocation[1][1],
+              'imgSrc': '/static/img/location.jpg',
+              'iconSize': [40, 40]
+            },
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [myorglocations[1][2], myorglocations[1][1]]
+            }
+          },
+          {
+            'type': 'Feature',
+            'properties': {
+              'message': myneworglocation[2][1],
+              'imgSrc': '/static/img/location.jpg',
+              'iconSize': [40, 40]
+            },
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [myorglocations[2][2], myorglocations[2][1]]
+            }
+          }
+        ]
+      };
+       // var first = true
+      geojson.features.forEach(function (marker) {
+        // create a DOM element for the marker
+        var el = document.createElement('div');
+        el.className = 'marker';
+
+        el.style.backgroundImage = 'url('+marker.properties.imgSrc+')';
+
+
+        el.style.width = marker.properties.iconSize[0] + 'px';
+        el.style.height = marker.properties.iconSize[1] + 'px';
+
+        el.addEventListener('click', function () {
+          window.alert(marker.properties.message);
+        });
+
+        // add marker to map
+        new maplibregl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+        })
+
+      }
+
+  </script>
+  <!-- bootstrap file js   -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+    integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+    crossorigin="anonymous"></script>
+  <!-- main js file  -->
+  <script src="{% static 'javascript/script.js' %}"></script>
+
+</body>
+
+</html>
